@@ -6,7 +6,7 @@ import {
   create,
   update,
   deleteApplication
-} from ('../controllers/applicationController');
+} from '../controllers/applicationController.js';
 
 
 router.get('/', getAll);

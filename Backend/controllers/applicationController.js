@@ -1,4 +1,4 @@
-import { applicatiomModel } from "../models/application";
+import { applicatiomModel } from "../models/application.js";
 
 const getAll = async (req, res) => {
   try {
