@@ -1,3 +1,4 @@
+import e from "express";
 import { applicatiomModel } from "../models/application.js";
 
 const getAll = async (req, res) => {
@@ -16,7 +17,7 @@ const getAll = async (req, res) => {
       ];
     }
  
-    const applications = await Application.find(filter).sort({ applied_date: -1 });
+    const applications = await applicatiomModel.find(filter).sort({ applied_date: -1 });
     res.json(applications);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -27,7 +28,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const { id } = req.params;
-    const application = await Application.findById(id);
+    const application = await applicatiomModel.findById(id);
  
     if (!application) {
       return res.status(404).json({ error: 'Application not found' });
@@ -61,7 +62,7 @@ const create = async (req, res) => {
       return res.status(400).json({ error: 'Applied date required' });
     }
  
-    const application = new Application({
+    const application = new applicatiomModel({
       company_name: company_name.trim(),
       job_title: job_title.trim(),
       job_type,
@@ -122,7 +123,7 @@ const update = async (req, res) => {
       updateData.notes = notes.trim();
     }
  
-    const application = await Application.findByIdAndUpdate(id, updateData, {
+    const application = await applicatiomModel.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true
     });
@@ -142,7 +143,7 @@ const deleteApplication = async (req, res) => {
   try {
     const { id } = req.params;
  
-    const application = await Application.findByIdAndDelete(id);
+    const application = await applicatiomModel.findByIdAndDelete(id);
  
     if (!application) {
       return res.status(404).json({ error: 'Application not found' });
@@ -150,6 +151,7 @@ const deleteApplication = async (req, res) => {
  
     res.json({ message: 'Application deleted successfully' });
   } catch (error) {
+    console.error("Delete error:",error)
     res.status(500).json({ error: error.message });
   }
 };
